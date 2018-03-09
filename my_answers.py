@@ -15,7 +15,7 @@ def window_transform_series(series, window_size):
     
     pairs = len(series)-window_size
     
-    for i in range(pairs-1):
+    for i in range(pairs):
         X.append(series[i:window_size+i])
         
     y = series[window_size:]
@@ -30,12 +30,24 @@ def window_transform_series(series, window_size):
 
 # TODO: build an RNN to perform regression on our time series input/output data
 def build_part1_RNN(window_size):
-    pass
+    
+    rnn = Sequential()
+    rnn.add(LSTM(5, input_shape=(window_size,1)))
+    rnn.add(Dense(1))
+    return rnn
+
+    
+    
 
 
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
 def cleaned_text(text):
     punctuation = ['!', ',', '.', ':', ';', '?']
+    
+    for c, value in enumerate(list(set(text))):
+        if (value.isalpha()==False and value not in punctuation):
+            text = text.replace(value," ");
+            
 
     return text
 
@@ -44,7 +56,12 @@ def window_transform_text(text, window_size, step_size):
     # containers for input/output pairs
     inputs = []
     outputs = []
-
+    
+    for i in range(0, len(text)-window_size,step_size):
+        inputs.append(text[i:window_size+i])
+        
+    outputs = text[window_size::step_size]
+    
     return inputs,outputs
 
 # TODO build the required RNN model: 
