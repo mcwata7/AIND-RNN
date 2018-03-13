@@ -60,7 +60,7 @@ def window_transform_text(text, window_size, step_size):
     for i in range(0, len(text)-window_size,step_size):
         inputs.append(text[i:window_size+i])
         
-    outputs = text[window_size::step_size]
+    outputs = [a for a in text[window_size::step_size]]
     
     return inputs,outputs
 
@@ -68,7 +68,6 @@ def window_transform_text(text, window_size, step_size):
 # a single LSTM hidden layer with softmax activation, categorical_crossentropy loss 
 def build_part2_RNN(window_size, num_chars):
     rnn = Sequential()
-    rnn.add(LSTM(5, input_shape=(window_size,num_chars)))
-    rnn.add(Dense(num_chars))
-    rnn.add(Dense(num_chars, activation='softmax'))
+    rnn.add(LSTM(200, input_shape=(window_size,num_chars)))
+    rnn.add(Dense(num_chars, activation = 'softmax'))
     return rnn
