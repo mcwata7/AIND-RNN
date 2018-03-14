@@ -43,9 +43,9 @@ def build_part1_RNN(window_size):
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
 def cleaned_text(text):
     punctuation = ['!', ',', '.', ':', ';', '?']
-    
+    azlist = [chr(i) for i in range(ord('a'),ord('z')+1)]
     for c, value in enumerate(list(set(text))):
-        if (value.isalpha()==False and value not in punctuation):
+        if (value not in azlist and value not in punctuation):
             text = text.replace(value," ");
             
 
